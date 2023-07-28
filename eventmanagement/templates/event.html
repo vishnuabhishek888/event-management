@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Detail</title>
+</head>
+<body>
+    <h1>{{ event.title }}</h1>
+    <p>Description: {{ event.description }}</p>
+    <p>Date: {{ event.date }}</p>
+    <p>Time: {{ event.time }}</p>
+    <p>Location: {{ event.location }}</p>
+    <p>Organizer: {{ event.organizer }}</p>
+
+    <!-- Display RSVP form if the user is authenticated -->
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'add_rsvp' event_id=event.id %}">
+            {% csrf_token %}
+            <label for="rsvp">RSVP:</label>
+            <select name="rsvp" id="rsvp">
+                <option value="male">Accept with pleasure</option>
+                <option value="female">Regretfully Decline</option>
+                <option value="others">Others</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+</body>
+</html>
